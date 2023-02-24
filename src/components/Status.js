@@ -1,0 +1,175 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable comma-dangle */
+import React from 'react'
+import './style/loadtest.css'
+import styled from 'styled-components'
+import {
+  Box,
+  createTheme,
+  ThemeProvider,
+  TextField,
+  Table,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  TablePagination,
+  Paper,
+} from '@mui/material'
+const theme = createTheme({
+  palette: {
+    run: { main: '#b6d7a8' },
+    stop: { main: '#ff9900' },
+    save: { main: '#ffd966' },
+  },
+})
+const Container = styled.div`
+  font-size: 2em;
+  display: flex;
+  width: 85vw;
+`
+const Header = styled.header`
+  font-size: 2.5em;
+  font-weight: bold;
+  padding: 1%;
+`
+const Formul = styled.ul`
+  padding-left: 50px;
+`
+const Formli = styled.li`
+  padding-bottom: 5vh;
+`
+const columns = [
+  { id: 'number', label: 'Number', minWidth: 170 },
+  { id: 'AnD', label: 'Alive/Dead', minWidth: 100 },
+  {
+    id: 'IP',
+    label: 'IP Address',
+    minWidth: 170,
+    align: 'right',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'CCBM',
+    label: 'Cumulative count of blocks mined',
+    minWidth: 170,
+    align: 'right',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'HR',
+    label: 'Hash\u00a0rate\u00a0(GH/s)',
+    minWidth: 170,
+    align: 'right',
+    format: (value) => value.toFixed(2),
+  },
+  {
+    id: 'uptime',
+    label: 'Uptime\u00a0(hours)',
+    minWidth: 170,
+    align: 'right',
+    format: (value) => value.toFixed(2),
+  },
+]
+
+function createData(number, AnD, IP, CCBM, HR, uptime) {
+  return { number, AnD, IP, CCBM, HR, uptime }
+}
+
+const rows = [
+  createData('1', 'Alive', '24.144.97.105', 87, 0.3, 3406),
+  createData('2', 'Alive', '212.184.50.196', 69, 0.5, 417),
+  createData('3', 'Dead', '79.16.112.113', 18, 17, 2318),
+  createData('4', 'Alive', '77.5.208.210', 62, 1.4, 2197),
+  createData('5', 'Alive', '221.231.42.136', 61, 6.7, 311),
+]
+const loadTest = () => {
+  const [page, setPage] = React.useState(0)
+  const [rowsPerPage, setRowsPerPage] = React.useState(10)
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage)
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value)
+    setPage(0)
+  }
+  return (
+    <Container>
+      <ThemeProvider theme={theme}>
+        <Box flex={5}>
+          <Header> Nodes status</Header>
+          <Formul>
+            <Formli>
+              total nodes {}{' '}
+              <TextField id="outlined-basic" variant="outlined" />
+            </Formli>
+            <Formli>
+              network hash rate{' '}
+              <TextField id="outlined-basic" variant="outlined" /> PH/s{' '}
+            </Formli>
+          </Formul>
+          <TableContainer component={Paper} sx={{ width: '83.7vw' }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
+                      sx={{ width: '5vw', fontSize: '1.2rem' }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.code}
+                      >
+                        {columns.map((column) => {
+                          const value = row[column.id]
+                          return (
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              sx={{ fontSize: '1.2rem' }}
+                            >
+                              {column.format && typeof value === 'number'
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          )
+                        })}
+                      </TableRow>
+                    )
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Box>
+      </ThemeProvider>
+    </Container>
+  )
+}
+export default loadTest
