@@ -14,7 +14,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
-  Paper,
+  Paper, Divider,
 } from '@mui/material'
 const theme = createTheme({
   palette: {
@@ -26,7 +26,7 @@ const theme = createTheme({
 const Container = styled.div`
   font-size: 2em;
   display: flex;
-  width: 85vw;
+  width: 100%;
 `
 const Header = styled.header`
   font-size: 2.5em;
@@ -34,60 +34,62 @@ const Header = styled.header`
   padding: 1%;
 `
 const Formul = styled.ul`
-  padding-left: 50px;
+  padding-left: 20px;
 `
 const Formli = styled.li`
-  padding-bottom: 5vh;
+  padding-bottom: 20px;
+  font-size: 18px;
 `
 function createData(name, value) {
   return { name, value }
 }
 
 const rows = [
-  createData('tx success rate (%)', 97.0),
-  createData('tx fail rate (%)', 3.0),
-  createData('average block period (sec)', 100),
-  createData('number of blocks', 10),
-  createData('avaliable rpc nodes to send request to', 11),
+  createData(<p>tx success rate <span>%</span></p>, 97.0),
+  createData(<p>tx fail rate <span>%</span></p>, 3.0),
+  createData(<p>average block period <span>sec</span></p>, 100),
+  createData(<p>number of blocks</p>, 10),
+  createData(<p>avaliable rpc nodes to send request to</p>, 11),
 ]
 const loadTest = () => {
   return (
     <Container>
       <ThemeProvider theme={theme}>
         <Box flex={5}>
-          <Header> Load test</Header>
+          <Header className="content-t">Load test</Header>
+          <Divider style={{ marginBottom: '30px' }} />
           <Formul>
             <Formli>
-              txbot status {}{' '}
-              <Button size="large" variant="contained" color="run">
+              txbot status {}{' '}&nbsp;
+              <Button size="small" variant="contained" color="run">
                 Run
-              </Button>{' '}
-              <Button size="large" variant="contained" color="stop">
+              </Button>{' '}&nbsp;
+              <Button size="small" variant="contained" color="stop">
                 Stop
               </Button>
             </Formli>
             <Formli>
-              <TextField id="outlined-basic" variant="outlined" /> requests per
-              time length <TextField id="outlined-basic" variant="outlined" />{' '}
-              sec{' '}
+              <TextField id="outlined-basic" variant="outlined" />&nbsp; requests per
+              time length &nbsp;<TextField id="outlined-basic" variant="outlined" />{' '}
+              &nbsp;sec{' '}&nbsp;
               <Button size="large" variant="contained" color="save">
                 Save
               </Button>
             </Formli>
             <Formli>
-              target geth N nodes to send rrpc request to{' '}
-              <TextField id="outlined-basic" variant="outlined" />{' '}
+              target geth N nodes to send rrpc request to{' '}&nbsp;
+              <TextField id="outlined-basic" variant="outlined" />{' '}&nbsp;
               <Button size="large" variant="contained" color="save">
                 Save
               </Button>
             </Formli>
             <Formli>
-              most recent N {"tx's"} to query{' '}
+              most recent N {"tx's"} to query{' '}&nbsp;
               <TextField id="outlined-basic" variant="outlined" />
             </Formli>
           </Formul>
-          <TableContainer component={Paper} sx={{ width: '83.7vw' }}>
-            <Table sx={{ minWidth: 650 }} aria-label="a dense table">
+          <TableContainer component={Paper} className="loadTable">
+            <Table aria-label="a dense table">
               <TableBody>
                 {rows.map((row) => (
                   <TableRow

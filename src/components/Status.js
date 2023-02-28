@@ -15,7 +15,7 @@ import {
   TableContainer,
   TableRow,
   TablePagination,
-  Paper,
+  Paper, Divider,
 } from '@mui/material'
 const theme = createTheme({
   palette: {
@@ -27,7 +27,7 @@ const theme = createTheme({
 const Container = styled.div`
   font-size: 2em;
   display: flex;
-  width: 85vw;
+  width: 100%;
 `
 const Header = styled.header`
   font-size: 2.5em;
@@ -35,10 +35,11 @@ const Header = styled.header`
   padding: 1%;
 `
 const Formul = styled.ul`
-  padding-left: 50px;
+  padding-left: 20px;
 `
 const Formli = styled.li`
-  padding-bottom: 5vh;
+  padding-bottom: 20px;
+  font-size: 18px;
 `
 const columns = [
   { id: 'number', label: 'Number', minWidth: 170 },
@@ -100,18 +101,19 @@ const loadTest = () => {
     <Container>
       <ThemeProvider theme={theme}>
         <Box flex={5}>
-          <Header> Nodes status</Header>
+          <Header className="content-t"> Nodes status</Header>
+          <Divider style={{ marginBottom: '30px' }} />
           <Formul>
             <Formli>
-              total nodes {}{' '}
+              total nodes {}{' '}&nbsp;
               <TextField id="outlined-basic" variant="outlined" />
             </Formli>
             <Formli>
-              network hash rate{' '}
-              <TextField id="outlined-basic" variant="outlined" /> PH/s{' '}
+              network hash rate{' '}&nbsp;
+              <TextField id="outlined-basic" variant="outlined" />&nbsp;PH/s{' '}
             </Formli>
           </Formul>
-          <TableContainer component={Paper} sx={{ width: '83.7vw' }}>
+          <TableContainer component={Paper} className="loadTable">
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -120,7 +122,7 @@ const loadTest = () => {
                       key={column.id}
                       align={column.align}
                       style={{ minWidth: column.minWidth }}
-                      sx={{ width: '5vw', fontSize: '1.2rem' }}
+                      sx={{ width: '5vw', fontSize: '18px', fontWeight: '600' }}
                     >
                       {column.label}
                     </TableCell>
@@ -144,7 +146,7 @@ const loadTest = () => {
                             <TableCell
                               key={column.id}
                               align={column.align}
-                              sx={{ fontSize: '1.2rem' }}
+                              sx={{ fontSize: '16px' }}
                             >
                               {column.format && typeof value === 'number'
                                 ? column.format(value)

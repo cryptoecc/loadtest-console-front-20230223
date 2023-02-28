@@ -1,22 +1,33 @@
 /* eslint-disable comma-dangle */
 /* eslint-disable prettier/prettier */
 import * as React from 'react'
+import styled from 'styled-components'
 import {
   Box,
   TableContainer,
-  Typography,
   Table,
   TableHead,
   Paper,
   TableRow,
   TableCell,
   TableBody,
-  TextField,
+  TextField, Divider,
 } from '@mui/material'
 
 function createData(index, ipAddress, power) {
   return { index, ipAddress, power }
 }
+const Container = styled.div`
+  font-size: 2em;
+  display: flex;
+  width: 100%;
+`
+
+const Header = styled.header`
+  font-size: 2.5em;
+  font-weight: bold;
+  padding: 1%;
+`
 
 const txRows = [
   createData(1, '24.114.97.105', 'off'),
@@ -34,11 +45,13 @@ const nlRows = [
 ]
 const TestSet = () => {
   return (
+      <Container>
     <Box flex={5}>
       <Box flex={1}>
-        <Typography variant="h4">Tx bot list</Typography>
+        <Header className="content-t">Tx bot list</Header>
+        <Divider style={{ marginBottom: '30px' }} />
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+          <Table sx={{ minWidth: 300 }} size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
                 <TableCell>#</TableCell>
@@ -64,15 +77,14 @@ const TestSet = () => {
         </TableContainer>
       </Box>
       <Box flex={1}>
-        <Typography variant="h4">Tx bot list</Typography>
         <TextField
           label="Size"
           id="outlined-size-small"
-          defaultValue="Small"
-          size="small"
+          defaultValue="medium"
+          size="medium"
         />
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+          <Table sx={{ minWidth: '300px' }} size="medium" aria-label="a dense table">
             <TableHead>
               <TableRow>
                 <TableCell>#</TableCell>
@@ -98,6 +110,7 @@ const TestSet = () => {
         </TableContainer>
       </Box>
     </Box>
+      </Container>
   )
 }
 export default TestSet
