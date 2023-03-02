@@ -12,6 +12,7 @@ import {
   TableCell,
   TableBody,
   TextField,
+  Checkbox,
 } from '@mui/material'
 
 function createData(index, ipAddress, power) {
@@ -19,24 +20,25 @@ function createData(index, ipAddress, power) {
 }
 
 const txRows = [
-  createData(1, '24.114.97.105', 'off'),
-  createData(2, '212.184.50.196', 'on'),
-  createData(3, '79.16.112.113', 'on'),
-  createData(4, '77.65.208.210', 'off'),
-  createData(5, '221.231.42.136', 'on'),
+  createData(1, '24.114.97.105', false),
+  createData(2, '212.184.50.196', true),
+  createData(3, '79.16.112.113', true),
+  createData(4, '77.65.208.210', false),
+  createData(5, '221.231.42.136', true),
 ]
 const nlRows = [
-  createData(1, '146.27.98.209', 'exclude'),
-  createData(2, '59.34.68.28', 'include'),
-  createData(3, '141.80.46.238', 'exclude'),
-  createData(4, '58.248.142.80', 'include'),
-  createData(5, '210.8.91.250', 'include'),
+  createData(1, '146.27.98.209', false),
+  createData(2, '59.34.68.28', true),
+  createData(3, '141.80.46.238', false),
+  createData(4, '58.248.142.80', true),
+  createData(5, '210.8.91.250', true),
 ]
 const TestSet = () => {
   return (
-    <Box flex={5}>
-      <Box flex={1}>
+    <Box flex={5} display={'flex'}>
+      <Box flex={1} p={10}>
         <Typography variant="h4">Tx bot list</Typography>
+        <TextField id="outlined-size-small" size="small" />
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
             <TableHead>
@@ -56,21 +58,18 @@ const TestSet = () => {
                     {row.name}
                   </TableCell>
                   <TableCell align="right">{row.ipAddress}</TableCell>
-                  <TableCell align="right">{row.power}</TableCell>
+                  <TableCell align="right">
+                    {row.power ? <Checkbox defaultChecked /> : <Checkbox />}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Box>
-      <Box flex={1}>
+      <Box flex={1} p={10}>
         <Typography variant="h4">Tx bot list</Typography>
-        <TextField
-          label="Size"
-          id="outlined-size-small"
-          defaultValue="Small"
-          size="small"
-        />
+        <TextField id="outlined-size-small" size="small" />
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
             <TableHead>
@@ -90,7 +89,9 @@ const TestSet = () => {
                     {row.name}
                   </TableCell>
                   <TableCell align="right">{row.ipAddress}</TableCell>
-                  <TableCell align="right">{row.power}</TableCell>
+                  <TableCell align="right">
+                    {row.power ? <Checkbox defaultChecked /> : <Checkbox />}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
